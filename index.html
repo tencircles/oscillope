@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="oscillope.js"></script>
+<script>
+    var context = new window.webkitAudioContext();
+    var osc = context.createOscillope();
+    var dly = context.createDelay();
+
+    dly.delayTime = 0.125;
+    osc.connect(context.destination);
+    var i = 0;
+    var x = [60, 63, 67, 63];
+    (function loop () {
+        if (i < 4) {
+            osc.makeNote(x[i], context.currentTime, 0.25);
+            setTimeout(loop, 500);
+            i++;
+        }
+    })();
+</script>
+</body>
+</html>
