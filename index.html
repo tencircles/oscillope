@@ -6,20 +6,28 @@
 <body>
 <script src="oscillope.js"></script>
 <script>
-    var context = new window.webkitAudioContext();
-    var osc = context.createOscillope();
-    var dly = context.createDelay();
+    (function () {
+        var context = new window.webkitAudioContext(),
+            osc = context.createOscillope(),
+            dly = context.createDelay();
 
-    dly.delayTime = 0.125;
-    osc.connect(context.destination);
-    var i = 0;
-    var x = [60, 63, 67, 63];
-    (function loop () {
-        if (i < 4) {
-            osc.makeNote(x[i], context.currentTime, 0.25);
-            setTimeout(loop, 500);
-            i++;
-        }
+        var beatTime = context.currentTime,
+            notes = window.notes = [60, 63, 67, 63],
+            beat = 0,
+            noteLength = 0.25;
+
+        dly.delayTime = 0.125;
+        osc.connect(context.destination);
+        osc.adsr(0.005, 0.05, 0.5, 1);
+
+        /*(function loop () {
+            if (context.currentTime > beatTime) {
+                beatTime += noteLength;
+                osc.makeNote(notes[beat], beatTime, 0.25);
+                beat = (beat + 1) % notes.length;
+            }
+            setTimeout(loop, 0);
+        })();*/
     })();
 </script>
 </body>
