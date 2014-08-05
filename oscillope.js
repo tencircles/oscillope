@@ -5,7 +5,6 @@
     module.exports = definition() :
     this.oscillope = definition();
 })(function () {
-    //a d s r
     function Oscillope (context) {
         hackit(context);
         this.context = context;
@@ -74,6 +73,14 @@
         gain: {
             get: function () {
                 return this.output.gain;
+            }
+        },
+        type: {
+            get: function () {
+                return this._type;
+            },
+            set: function (value) {
+                this._type = value;
             }
         }
     });
